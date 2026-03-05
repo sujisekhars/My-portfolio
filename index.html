@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;My Gold &amp; Silver Portfolio&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: system-ui, sans-serif; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.live { animation: pulse 2s infinite; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-gray-950 text-white min-h-screen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="max-w-4xl mx-auto p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1 class="text-4xl font-bold text-center mb-2"&gt;My Gold &amp; Silver Portfolio&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="text-center text-gray-400 mb-8"&gt;Live INR rates • Zero cost • Zero maintenance&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Live Rates --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bg-gray-900 rounded-2xl p-8 mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="text-2xl font-semibold mb-6 flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Live Rates &lt;span id="last-updated" class="text-sm font-normal text-gray-400"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-gray-800 rounded-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="text-yellow-400 text-xl font-bold"&gt;Gold (24K)&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p id="gold-rate" class="text-4xl font-bold text-white mt-2"&gt;₹0.00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="text-sm text-gray-400"&gt;per 10 grams&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p id="gold-oz" class="text-xs text-gray-400"&gt;per oz: ₹0&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-gray-800 rounded-xl p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="text-gray-300 text-xl font-bold"&gt;Silver&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p id="silver-rate" class="text-4xl font-bold text-white mt-2"&gt;₹0.00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="text-sm text-gray-400"&gt;per kg&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;p id="silver-oz" class="text-xs text-gray-400"&gt;per oz: ₹0&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Portfolio --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bg-gray-900 rounded-2xl p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="text-2xl font-semibold mb-6"&gt;My Holdings&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Gold --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="block text-yellow-400 font-medium mb-2"&gt;Gold (grams)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input id="gold-grams" type="number" step="0.01" value="0"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                 </span>class="w-full bg-gray-800 text-3xl p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="gold-value" class="mt-2 text-2xl font-bold text-yellow-400"&gt;Value: ₹0.00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Silver --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="block text-gray-300 font-medium mb-2"&gt;Silver (grams)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input id="silver-grams" type="number" step="0.01" value="0"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                 </span>class="w-full bg-gray-800 text-3xl p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="silver-value" class="mt-2 text-2xl font-bold text-gray-300"&gt;Value: ₹0.00&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Total --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="border-t border-gray-700 pt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex justify-between text-3xl font-bold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span&gt;Total Portfolio Value&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="total-value" class="text-green-400"&gt;₹0.00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mt-8 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="saveHoldings()"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>class="bg-green-600 hover:bg-green-500 px-8 py-3 rounded-full font-medium text-lg transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Save Holdings</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="resetHoldings()"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>class="ml-4 text-gray-400 hover:text-white text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Reset</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p class="text-center text-gray-500 text-xs mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Rates from public spot market • Pure 24K gold &amp; 999 silver&lt;br&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>Data updates every 30 seconds • Stored only in your browser</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let goldPerGram = 0, silverPerGram = 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>async function fetchLiveRates() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const res = await fetch('https://data-asg.goldprice.org/dbXRates/USD,INR');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const data = await res.json();</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const inr = data.items.find(item =&gt; item.curr === 'INR');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!inr) throw new Error();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ozToGram = 31.1034768;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Gold per 10 grams (standard Indian display)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>goldPerGram = inr.xauPrice / ozToGram;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const gold10g = (goldPerGram * 10).toFixed(2);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Silver per kg</p>
+<p class="p1"><span class="Apple-converted-space">        </span>silverPerGram = inr.xagPrice / ozToGram;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const silverKg = (silverPerGram * 1000).toFixed(2);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Update DOM</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('gold-rate').textContent = `₹${gold10g}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('gold-oz').textContent = `per oz: ₹${inr.xauPrice.toFixed(0)}`;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('silver-rate').textContent = `₹${silverKg}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('silver-oz').textContent = `per oz: ₹${inr.xagPrice.toFixed(0)}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const time = new Date(data.timestamp * 1000 || Date.now());</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('last-updated').textContent = `• Updated ${time.toLocaleTimeString('en-IN')}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>calculatePortfolio();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch(e) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>console.log("Rate fetch failed (rare)");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function calculatePortfolio() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const goldG = parseFloat(document.getElementById('gold-grams').value) || 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const silverG = parseFloat(document.getElementById('silver-grams').value) || 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const goldVal = (goldG * goldPerGram).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const silverVal = (silverG * silverPerGram).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const total = (parseFloat(goldVal) + parseFloat(silverVal)).toFixed(0);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('gold-value').textContent = `Value: ₹${goldVal}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('silver-value').textContent = `Value: ₹${silverVal}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('total-value').textContent = `₹${total}`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function saveHoldings() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>localStorage.setItem('goldGrams', document.getElementById('gold-grams').value);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>localStorage.setItem('silverGrams', document.getElementById('silver-grams').value);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>alert("✅ Holdings saved in your browser!");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function resetHoldings() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (confirm("Clear all holdings?")) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>localStorage.clear();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('gold-grams').value = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('silver-grams').value = 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>calculatePortfolio();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Load saved values</p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('gold-grams').value = localStorage.getItem('goldGrams') || 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('silver-grams').value = localStorage.getItem('silverGrams') || 0;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>fetchLiveRates();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>setInterval(fetchLiveRates, 30000); // every 30 seconds</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Recalculate on input change</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('gold-grams').addEventListener('input', calculatePortfolio);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('silver-grams').addEventListener('input', calculatePortfolio);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
