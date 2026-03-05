@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sekhar & Suji — Gold & Silver Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold:#D4A943;--gold-light:#F2D27A;--gold-dark:#9A7520;
+      --silver:#A8B8C4;--silver-light:#D6E4ED;
+      --bg:#080807;--surface:#0F0F0E;--surface2:#181816;
+      --border:rgba(255,255,255,0.07);--text:#F0EAD6;--muted:#7A7060;
+      --green:#5FBF7A;--red:#D96B6B;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+
+    /* Background */
+    .bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .bg-orbs::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(212,169,67,0.07) 0%,transparent 70%);top:-200px;left:-200px;animation:drift1 18s ease-in-out infinite alternate}
+    .bg-orbs::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,184,196,0.05) 0%,transparent 70%);bottom:-100px;right:-100px;animation:drift2 22s ease-in-out infinite alternate}
+    @keyframes drift1{from{transform:translate(0,0)}to{transform:translate(80px,60px)}}
+    @keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-60px,-80px)}}
+    .grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+    /* Layout */
+    .wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:2}
+
+    /* Header */
+    header{padding:2.2rem 0 1.8rem;border-bottom:1px solid var(--border);position:relative;z-index:2}
+    .header-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .brand{font-family:'Cinzel',serif;font-size:clamp(1.1rem,2.5vw,1.55rem);letter-spacing:0.12em;color:var(--gold-light)}
+    .brand span{color:var(--silver-light)}
+    .header-right{display:flex;align-items:center;gap:1rem;font-size:0.72rem;color:var(--muted)}
+    .live-badge{display:flex;align-items:center;gap:0.4rem;background:rgba(95,191,122,0.1);border:1px solid rgba(95,191,122,0.25);color:var(--green);padding:0.28rem 0.8rem;border-radius:20px;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase}
+    .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+    /* Hero */
+    .hero{padding:4rem 0 2.5rem;text-align:center}
+    .hero-eyebrow{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:400;line-height:1.1;color:var(--text)}
+    .hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{margin-top:1rem;font-size:0.8rem;color:var(--muted);letter-spacing:0.08em}
+
+    /* Setup Banner */
+    .setup-banner{background:rgba(212,169,67,0.06);border:1px solid rgba(212,169,67,0.28);border-radius:8px;padding:1.4rem 1.8rem;margin-bottom:2rem}
+    .setup-title{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem}
+    .setup-steps{font-size:0.8rem;color:var(--muted);line-height:1.8;margin-bottom:1rem}
+    .setup-steps a{color:var(--gold);text-decoration:none}
+    .setup-steps strong{color:var(--text)}
+    .setup-input-row{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center}
+    .setup-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:0.6rem 1rem;border-radius:4px;flex:1;min-width:200px;outline:none;transition:border-color 0.2s}
+    .setup-input:focus{border-color:var(--gold)}
+    .setup-input::placeholder{color:var(--muted)}
+    .btn-primary{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border:none;font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;padding:0.6rem 1.4rem;border-radius:4px;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;font-weight:600}
+    .btn-primary:hover{opacity:0.85}
+
+    /* Status */
+    .status-bar{text-align:center;font-size:0.74rem;padding:0.5rem;min-height:1.8rem;margin-bottom:1rem;border-radius:4px}
+    .status-bar.ok{color:var(--green)}
+    .status-bar.err{color:var(--red);background:rgba(217,107,107,0.08);border:1px solid rgba(217,107,107,0.15)}
+    .status-bar.loading{color:var(--muted)}
+
+    /* Holdings Editor */
+    .editor-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.6rem 2rem;margin-bottom:2rem}
+    .editor-title{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.8rem}
+    .editor-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(212,169,67,0.3),transparent)}
+    .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+    @media(max-width:560px){.editor-grid,.spot-row,.holdings-grid{grid-template-columns:1fr}}
+    .editor-field label{display:block;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.5rem}
+    .editor-field.gold-field label{color:var(--gold)}
+    .editor-field.silver-field label{color:var(--silver)}
+    .gram-input-wrap{display:flex;align-items:center;gap:0.6rem}
+    .gram-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;padding:0.6rem 1rem;border-radius:4px;width:100%;outline:none;transition:border-color 0.2s;-moz-appearance:textfield}
+    .gram-input::-webkit-outer-spin-button,.gram-input::-webkit-inner-spin-button{-webkit-appearance:none}
+    .gram-input:focus{border-color:var(--gold)}
+    .gram-unit{font-size:0.75rem;color:var(--muted);white-space:nowrap}
+    .editor-actions{margin-top:1.2rem;display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap}
+    .btn-save-grams{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;border:none;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;padding:0.6rem 1.4rem;border-radius:4px;cursor:pointer;transition:opacity 0.2s;font-weight:600}
+    .btn-save-grams:hover{opacity:0.85}
+    .save-hint{font-size:0.7rem;color:var(--muted)}
+
+    /* Total Card */
+    .total-card{background:var(--surface);border:1px solid rgba(212,169,67,0.22);border-radius:8px;padding:2.8rem 2rem;text-align:center;margin-bottom:1.8rem;position:relative;overflow:hidden}
+    .total-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light),var(--gold),transparent)}
+    .tc-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(212,169,67,0.06) 0%,transparent 70%);pointer-events:none}
+    .total-eyebrow{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;position:relative}
+    .total-amount{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7.5vw,5.5rem);font-weight:700;line-height:1;position:relative}
+    .total-amount .sym{font-size:0.42em;vertical-align:super;color:var(--gold);font-weight:400}
+    .total-amount .val{color:var(--gold-light)}
+    .total-sub{margin-top:0.8rem;font-size:0.76rem;color:var(--muted);position:relative}
+    .pills{display:flex;gap:0.8rem;justify-content:center;margin-top:1.2rem;flex-wrap:wrap;position:relative}
+    .pill{padding:0.32rem 1rem;border-radius:20px;font-size:0.72rem}
+    .pill-gold{background:rgba(212,169,67,0.12);color:var(--gold-light);border:1px solid rgba(212,169,67,0.2)}
+    .pill-silver{background:rgba(168,184,196,0.1);color:var(--silver-light);border:1px solid rgba(168,184,196,0.2)}
+
+    /* Spot Row */
+    .spot-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.8rem}
+    .spot-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.5rem 1.8rem;position:relative;overflow:hidden;transition:transform 0.3s,border-color 0.3s}
+    .spot-card:hover{transform:translateY(-2px)}
+    .spot-card.sc-gold{border-top:2px solid var(--gold)}
+    .spot-card.sc-silver{border-top:2px solid var(--silver)}
+    .sc-bg{position:absolute;inset:0;pointer-events:none}
+    .sc-gold .sc-bg{background:radial-gradient(ellipse 80% 60% at 100% 100%,rgba(212,169,67,0.06) 0%,transparent 60%)}
+    .sc-silver .sc-bg{background:radial-gradient(ellipse 80% 60% at 100% 100%,rgba(168,184,196,0.05) 0%,transparent 60%)}
+    .spot-lbl{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:0.7rem;position:relative}
+    .sc-gold .spot-lbl{color:var(--gold)}
+    .sc-silver .spot-lbl{color:var(--silver)}
+    .spot-price{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;line-height:1;position:relative}
+    .sc-gold .spot-price{color:var(--gold-light)}
+    .sc-silver .spot-price{color:var(--silver-light)}
+    .spot-unit{font-size:0.68rem;color:var(--muted);margin-top:0.35rem;position:relative}
+    .spot-next{position:absolute;bottom:1.2rem;right:1.4rem;font-size:0.65rem;color:var(--muted)}
+
+    /* Holdings Cards */
+    .section-lbl{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem}
+    .section-lbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(212,169,67,0.3),transparent)}
+    .holdings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.8rem}
+    .hcard{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.8rem;position:relative;overflow:hidden;transition:transform 0.3s}
+    .hcard:hover{transform:translateY(-2px)}
+    .hcard.hc-gold{border-left:3px solid var(--gold)}
+    .hcard.hc-silver{border-left:3px solid var(--silver)}
+    .hcard-icon{font-size:1.8rem;margin-bottom:0.8rem;filter:drop-shadow(0 0 8px rgba(212,169,67,0.4))}
+    .hc-silver .hcard-icon{filter:drop-shadow(0 0 8px rgba(168,184,196,0.3))}
+    .hcard-metal{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.4rem}
+    .hc-gold .hcard-metal{color:var(--gold)}
+    .hc-silver .hcard-metal{color:var(--silver)}
+    .hcard-weight{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;line-height:1;color:var(--text)}
+    .hcard-weight sup{font-size:0.32em;color:var(--muted);font-weight:400;vertical-align:super}
+    .hcard-div{height:1px;background:var(--border);margin:1rem 0}
+    .hcard-val-lbl{font-size:0.62rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.25rem}
+    .hcard-val{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400}
+    .hc-gold .hcard-val{color:var(--gold-light)}
+    .hc-silver .hcard-val{color:var(--silver-light)}
+
+    /* Table */
+    .tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2rem}
+    table{width:100%;border-collapse:collapse}
+    thead tr{background:var(--surface2)}
+    th{font-family:'Cinzel',serif;font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);padding:0.9rem 1.4rem;text-align:left;border-bottom:1px solid var(--border)}
+    td{padding:1rem 1.4rem;font-size:0.87rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+    tr:last-child td{border-bottom:none}
+    tbody tr:hover td{background:rgba(255,255,255,0.015)}
+    .mn{font-family:'Playfair Display',serif;font-size:1.05rem}
+    .mn-g{color:var(--gold-light)}.mn-s{color:var(--silver-light)}
+    .tbl-total td{background:rgba(212,169,67,0.04);font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-light);font-weight:700}
+
+    /* Refresh btn */
+    .refresh-row{text-align:center;margin-bottom:2.5rem}
+    .btn-refresh{background:none;border:1px solid rgba(212,169,67,0.3);color:var(--gold);font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;padding:0.55rem 1.5rem;border-radius:3px;cursor:pointer;transition:all 0.2s}
+    .btn-refresh:hover{background:rgba(212,169,67,0.08);border-color:var(--gold)}
+
+    /* Footer */
+    footer{border-top:1px solid var(--border);padding:1.6rem 0;text-align:center;color:var(--muted);font-size:0.68rem;letter-spacing:0.06em;position:relative;z-index:2}
+    footer a{color:var(--gold);text-decoration:none}
+
+    /* Animations */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .hero{animation:fadeUp 0.7s ease both}
+    .setup-banner{animation:fadeUp 0.7s 0.05s ease both}
+    .editor-section{animation:fadeUp 0.7s 0.08s ease both}
+    .total-card{animation:fadeUp 0.7s 0.12s ease both}
+    .spot-row{animation:fadeUp 0.7s 0.18s ease both}
+    .holdings-grid{animation:fadeUp 0.7s 0.24s ease both}
+    .tbl-wrap{animation:fadeUp 0.7s 0.3s ease both}
+
+    @media(max-width:480px){
+      th,td{padding:0.7rem 0.8rem}
+      th:nth-child(3),td:nth-child(3){display:none}
+    }
+  </style>
+</head>
+<body>
+<div class="bg-orbs"></div>
+<div class="grain"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap header-row">
+    <div class="brand">SEKHAR <span>& SUJI</span></div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div>Live Rates</div>
+      <span id="last-time">—</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Precious Metals Portfolio</div>
+    <h1>Gold & <em>Silver</em><br/>Holdings</h1>
+    <p class="hero-sub">24K Gold · 999 Fine Silver · Live INR Valuation · Editable Holdings</p>
+  </div>
+
+  <!-- ONE-TIME SETUP BANNER -->
+  <div class="setup-banner" id="setup-banner">
+    <div class="setup-title">⚙️ One-Time Setup — Free API Key Required</div>
+    <div class="setup-steps">
+      <strong>Step 1:</strong> Go to <a href="https://metals.dev" target="_blank">metals.dev</a> → Click <strong>"Get Started for Free"</strong> → Sign up (no credit card needed)<br/>
+      <strong>Step 2:</strong> Copy your API key from the dashboard<br/>
+      <strong>Step 3:</strong> Paste it below and click <strong>Save</strong> — you never need to do this again ✅
+    </div>
+    <div class="setup-input-row">
+      <input class="setup-input" type="text" id="api-key-input" placeholder="Paste your metals.dev API key here…"/>
+      <button class="btn-primary" onclick="saveKey()">SAVE & CONNECT</button>
+    </div>
+  </div>
+
+  <!-- STATUS -->
+  <div class="status-bar loading" id="status-bar">Waiting for API key…</div>
+
+  <!-- HOLDINGS EDITOR -->
+  <div class="editor-section">
+    <div class="editor-title">Update Your Holdings</div>
+    <div class="editor-grid">
+      <div class="editor-field gold-field">
+        <label>24K Gold (grams)</label>
+        <div class="gram-input-wrap">
+          <input class="gram-input" type="number" id="gold-grams-input" value="520" min="0" step="0.01"/>
+          <span class="gram-unit">grams</span>
+        </div>
+      </div>
+      <div class="editor-field silver-field">
+        <label>999 Fine Silver (grams)</label>
+        <div class="gram-input-wrap">
+          <input class="gram-input" type="number" id="silver-grams-input" value="500" min="0" step="0.01"/>
+          <span class="gram-unit">grams</span>
+        </div>
+      </div>
+    </div>
+    <div class="editor-actions">
+      <button class="btn-save-grams" onclick="saveGrams()">✓ SAVE & RECALCULATE</button>
+      <span class="save-hint">Your holdings are saved automatically in your browser</span>
+    </div>
+  </div>
+
+  <!-- TOTAL VALUE -->
+  <div class="total-card">
+    <div class="tc-bg"></div>
+    <div class="total-eyebrow">Total Portfolio Value (INR)</div>
+    <div class="total-amount"><span class="sym">₹</span><span class="val" id="total-val">—</span></div>
+    <div class="total-sub" id="total-sub">Enter your API key above to load live rates</div>
+    <div class="pills">
+      <div class="pill pill-gold" id="pill-gold">Gold: ₹ —</div>
+      <div class="pill pill-silver" id="pill-silver">Silver: ₹ —</div>
+    </div>
+  </div>
+
+  <!-- SPOT PRICES -->
+  <div class="spot-row">
+    <div class="spot-card sc-gold">
+      <div class="sc-bg"></div>
+      <div class="spot-lbl">24K Gold — Spot Rate</div>
+      <div class="spot-price" id="gold-rate">₹ —</div>
+      <div class="spot-unit">per gram (INR)</div>
+      <div class="spot-next" id="next-refresh">—</div>
+    </div>
+    <div class="spot-card sc-silver">
+      <div class="sc-bg"></div>
+      <div class="spot-lbl">999 Fine Silver — Spot Rate</div>
+      <div class="spot-price" id="silver-rate">₹ —</div>
+      <div class="spot-unit">per gram (INR)</div>
+    </div>
+  </div>
+
+  <!-- YOUR HOLDINGS -->
+  <div class="section-lbl">Your Current Holdings</div>
+  <div class="holdings-grid">
+    <div class="hcard hc-gold">
+      <div class="hcard-icon">⬡</div>
+      <div class="hcard-metal">24 Karat Gold</div>
+      <div class="hcard-weight" id="display-gold-grams">520<sup>g</sup></div>
+      <div class="hcard-div"></div>
+      <div class="hcard-val-lbl">Current Value</div>
+      <div class="hcard-val" id="gold-value">₹ —</div>
+    </div>
+    <div class="hcard hc-silver">
+      <div class="hcard-icon">◈</div>
+      <div class="hcard-metal">999 Fine Silver</div>
+      <div class="hcard-weight" id="display-silver-grams">500<sup>g</sup></div>
+      <div class="hcard-div"></div>
+      <div class="hcard-val-lbl">Current Value</div>
+      <div class="hcard-val" id="silver-value">₹ —</div>
+    </div>
+  </div>
+
+  <!-- BREAKDOWN TABLE -->
+  <div class="section-lbl">Portfolio Breakdown</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Metal</th><th>Purity</th><th>Your Weight</th>
+          <th>Live Rate/gram</th><th>Total Value (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="mn mn-g">Gold</span></td>
+          <td>24K · 99.9%</td>
+          <td id="t-gold-g">520 g</td>
+          <td id="t-gold-rate">—</td>
+          <td id="t-gold-val">—</td>
+        </tr>
+        <tr>
+          <td><span class="mn mn-s">Silver</span></td>
+          <td>999 Fine</td>
+          <td id="t-silver-g">500 g</td>
+          <td id="t-silver-rate">—</td>
+          <td id="t-silver-val">—</td>
+        </tr>
+        <tr class="tbl-total">
+          <td colspan="4"><strong>Total Portfolio</strong></td>
+          <td id="t-grand">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="refresh-row">
+    <button class="btn-refresh" onclick="loadRates()">↻ Refresh Rates Now</button>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Powered by <a href="https://metals.dev" target="_blank">Metals.Dev API</a> ·
+    Hosted free on <a href="https://pages.github.com" target="_blank">GitHub Pages</a> ·
+    Rates in INR · For reference only · Not financial advice
+  </div>
+</footer>
+
+<script>
+  /* ── CONSTANTS ───────────────────────────────── */
+  // Free plan = 100 req/month. Refresh every 8h = 90 req/month → always free!
+  const REFRESH_MS = 8 * 60 * 60 * 1000; // 8 hours
+
+  /* ── HELPERS ─────────────────────────────────── */
+  const $ = id => document.getElementById(id);
+  const inr = n => (isNaN(n)||n==null) ? '—' : Math.round(n).toLocaleString('en-IN');
+  const set = (id, html) => { const e=$(id); if(e) e.innerHTML=html; };
+
+  function setStatus(msg, type='loading') {
+    const e = $('status-bar');
+    e.textContent = msg;
+    e.className = 'status-bar ' + type;
+  }
+
+  /* ── STORAGE: API KEY ────────────────────────── */
+  function saveKey() {
+    const k = $('api-key-input').value.trim();
+    if (!k) { setStatus('⚠️ Please paste your API key first.', 'err'); return; }
+    localStorage.setItem('ssnj_api_key', k);
+    $('setup-banner').style.display = 'none';
+    loadRates();
+  }
+
+  function getKey() { return localStorage.getItem('ssnj_api_key') || ''; }
+
+  /* ── STORAGE: GRAMS ──────────────────────────── */
+  function saveGrams() {
+    const g = parseFloat($('gold-grams-input').value) || 0;
+    const s = parseFloat($('silver-grams-input').value) || 0;
+    localStorage.setItem('ssnj_gold_g', g);
+    localStorage.setItem('ssnj_silver_g', s);
+    updateDisplayGrams(g, s);
+    // Recalculate with cached rates if available
+    const cachedG = parseFloat(localStorage.getItem('ssnj_cached_gold_rate'));
+    const cachedS = parseFloat(localStorage.getItem('ssnj_cached_silver_rate'));
+    if (cachedG && cachedS) {
+      updateUI(cachedG, cachedS, g, s);
+      setStatus('✅ Holdings updated & recalculated!', 'ok');
+    } else {
+      setStatus('✅ Holdings saved! Load rates to calculate value.', 'ok');
+    }
+  }
+
+  function loadSavedGrams() {
+    const g = parseFloat(localStorage.getItem('ssnj_gold_g')) || 520;
+    const s = parseFloat(localStorage.getItem('ssnj_silver_g')) || 500;
+    $('gold-grams-input').value = g;
+    $('silver-grams-input').value = s;
+    updateDisplayGrams(g, s);
+    return { g, s };
+  }
+
+  function updateDisplayGrams(g, s) {
+    set('display-gold-grams', g + '<sup>g</sup>');
+    set('display-silver-grams', s + '<sup>g</sup>');
+    set('t-gold-g', g + ' g');
+    set('t-silver-g', s + ' g');
+  }
+
+  function getGrams() {
+    return {
+      g: parseFloat(localStorage.getItem('ssnj_gold_g')) || parseFloat($('gold-grams-input').value) || 520,
+      s: parseFloat(localStorage.getItem('ssnj_silver_g')) || parseFloat($('silver-grams-input').value) || 500
+    };
+  }
+
+  /* ── FETCH LIVE RATES ────────────────────────── */
+  async function loadRates() {
+    const key = getKey();
+    if (!key) {
+      setStatus('Enter your free metals.dev API key above to load live rates.', 'loading');
+      return;
+    }
+    setStatus('🔄 Fetching live gold & silver rates…', 'loading');
+    try {
+      // metals.dev returns price per gram in INR directly
+      const url = `https://api.metals.dev/v1/latest?api_key=${key}&currency=INR&unit=g`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+
+      if (data.status !== 'success') throw new Error(data.message || 'Invalid API key or quota exceeded');
+
+      const rawGold   = data.metals.gold;
+      const rawSilver = data.metals.silver;
+      if (!rawGold || !rawSilver) throw new Error('Missing gold/silver data');
+
+      // Apply Indian market adjustments to match MCX/dpgold.com rates:
+      // Gold:   +15% import duty + 3% GST = ×1.18
+      // Silver: +10% import duty + 3% GST = ×1.13
+      const GOLD_MULTIPLIER   = 1.18;
+      const SILVER_MULTIPLIER = 1.13;
+      const gRate = rawGold   * GOLD_MULTIPLIER;
+      const sRate = rawSilver * SILVER_MULTIPLIER;
+
+      // Cache rates for offline recalculation
+      localStorage.setItem('ssnj_cached_gold_rate', gRate);
+      localStorage.setItem('ssnj_cached_silver_rate', sRate);
+
+      const { g, s } = getGrams();
+      updateUI(gRate, sRate, g, s);
+
+      const now = new Date();
+      set('last-time', now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' }));
+
+      // Show next refresh time
+      const nextTime = new Date(now.getTime() + REFRESH_MS);
+      set('next-refresh', 'Next refresh: ' + nextTime.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' }));
+
+      setStatus('✅ Live rates loaded · Adjusted for Indian market (import duty + GST) · Auto-refreshes every 8 hours', 'ok');
+      $('setup-banner').style.display = 'none';
+
+    } catch(err) {
+      setStatus('❌ ' + err.message, 'err');
+    }
+  }
+
+  /* ── UPDATE ALL UI ───────────────────────────── */
+  function updateUI(gRate, sRate, goldG, silverG) {
+    const gTotal = gRate * goldG;
+    const sTotal = sRate * silverG;
+    const grand  = gTotal + sTotal;
+
+    // Spot prices
+    set('gold-rate',   '₹ ' + inr(gRate));
+    set('silver-rate', '₹ ' + inr(sRate));
+
+    // Holdings
+    set('gold-value',   '₹ ' + inr(gTotal));
+    set('silver-value', '₹ ' + inr(sTotal));
+
+    // Total
+    set('total-val',  inr(grand));
+    set('total-sub',  'Live market rates · Gold ' + inr(gTotal) + ' + Silver ' + inr(sTotal));
+    set('pill-gold',  'Gold: ₹ ' + inr(gTotal));
+    set('pill-silver','Silver: ₹ ' + inr(sTotal));
+
+    // Table
+    set('t-gold-rate',  '₹ ' + inr(gRate));
+    set('t-silver-rate','₹ ' + inr(sRate));
+    set('t-gold-val',   '₹ ' + inr(gTotal));
+    set('t-silver-val', '₹ ' + inr(sTotal));
+    set('t-grand',      '₹ ' + inr(grand));
+  }
+
+  /* ── INIT ────────────────────────────────────── */
+  window.addEventListener('DOMContentLoaded', () => {
+    // Load saved grams
+    loadSavedGrams();
+
+    // Load API key
+    const key = getKey();
+    if (key) {
+      $('api-key-input').value = key;
+      $('setup-banner').style.display = 'none';
+      loadRates();
+    } else {
+      setStatus('Enter your free API key above to load live rates.', 'loading');
+    }
+
+    // Auto-refresh every 8 hours = 90 requests/month (within 100 free limit)
+    setInterval(loadRates, REFRESH_MS);
+  });
+</script>
+</body>
+</html>
