@@ -1,697 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gold & Silver Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@300;400&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Gold & Silver Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --gold: #C9A84C;
-      --gold-light: #F0D080;
-      --gold-dark: #8B6914;
-      --silver: #B8C4CC;
-      --silver-light: #E2E8ED;
-      --silver-dark: #6E7F8A;
-      --bg: #0A0A0A;
-      --surface: #111111;
-      --surface2: #1A1A1A;
-      --text: #F5F0E8;
-      --muted: #888;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(201,168,76,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(184,196,204,0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .noise {
-      position: fixed;
-      inset: 0;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Header */
-    header {
-      padding: 3rem 0 2rem;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-      position: relative;
-      z-index: 2;
-    }
-
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .brand {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      letter-spacing: 0.15em;
-      color: var(--gold-light);
-    }
-
-    .brand span {
-      font-weight: 400;
-      color: var(--silver-light);
-    }
-
-    .last-updated {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    /* Hero */
-    .hero {
-      padding: 5rem 0 3rem;
-      text-align: center;
-    }
-
-    .hero-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-    }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--text);
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-
-    .hero-sub {
-      margin-top: 1.5rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-    }
-
-    /* Total value banner */
-    .total-banner {
-      margin: 3rem 0;
-      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(184,196,204,0.05));
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 4px;
-      padding: 2.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .total-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .total-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .total-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 300;
-      color: var(--gold-light);
-      letter-spacing: -0.01em;
-    }
-
-    .total-value .currency {
-      font-size: 0.5em;
-      vertical-align: super;
-      color: var(--gold);
-    }
-
-    .total-note {
-      margin-top: 0.8rem;
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    /* Live price ticker */
-    .price-ticker {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .ticker-card {
-      flex: 1;
-      min-width: 220px;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 4px;
-      padding: 1.5rem 2rem;
-      position: relative;
-      transition: border-color 0.3s;
-    }
-
-    .ticker-card:hover {
-      border-color: rgba(201,168,76,0.3);
-    }
-
-    .ticker-card.gold-card { border-top: 2px solid var(--gold); }
-    .ticker-card.silver-card { border-top: 2px solid var(--silver); }
-
-    .ticker-metal {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    .gold-card .ticker-metal { color: var(--gold); }
-    .silver-card .ticker-metal { color: var(--silver); }
-
-    .ticker-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-weight: 300;
-      line-height: 1;
-    }
-
-    .gold-card .ticker-price { color: var(--gold-light); }
-    .silver-card .ticker-price { color: var(--silver-light); }
-
-    .ticker-unit {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      letter-spacing: 0.05em;
-    }
-
-    .ticker-change {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 2px;
-    }
-
-    .change-up { background: rgba(74,222,128,0.1); color: #4ade80; }
-    .change-dn { background: rgba(248,113,113,0.1); color: #f87171; }
-
-    .ticker-loading {
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-style: italic;
-    }
-
-    /* Holdings */
-    .section-title {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(201,168,76,0.2);
-    }
-
-    .holdings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    @media (max-width: 640px) {
-      .holdings-grid { grid-template-columns: 1fr; }
-      .header-inner { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    }
-
-    .holding-card {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 4px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-
-    .holding-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .holding-card.gold-holding {
-      border-left: 3px solid var(--gold);
-    }
-
-    .holding-card.silver-holding {
-      border-left: 3px solid var(--silver);
-    }
-
-    .holding-card::after {
-      content: '';
-      position: absolute;
-      bottom: -30px; right: -30px;
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      opacity: 0.05;
-    }
-
-    .gold-holding::after { background: var(--gold); }
-    .silver-holding::after { background: var(--silver); }
-
-    .holding-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .holding-name {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.4rem;
-    }
-
-    .gold-holding .holding-name { color: var(--gold); }
-    .silver-holding .holding-name { color: var(--silver); }
-
-    .holding-weight {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .holding-weight span {
-      font-size: 1rem;
-      color: var(--muted);
-    }
-
-    .holding-value {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .holding-value-label {
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .holding-value-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      color: var(--gold-light);
-      margin-top: 0.2rem;
-    }
-
-    .silver-holding .holding-value-amount {
-      color: var(--silver-light);
-    }
-
-    /* Breakdown table */
-    .breakdown {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: 3rem;
-    }
-
-    .breakdown table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .breakdown th {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 1rem 1.5rem;
-      text-align: left;
-      background: var(--surface2);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .breakdown td {
-      padding: 1.2rem 1.5rem;
-      font-size: 0.9rem;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .breakdown tr:last-child td { border-bottom: none; }
-
-    .breakdown tr:hover td { background: rgba(255,255,255,0.02); }
-
-    .breakdown .metal-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-    }
-
-    .breakdown .gold-name { color: var(--gold-light); }
-    .breakdown .silver-name { color: var(--silver-light); }
-
-    .breakdown .total-row td {
-      background: rgba(201,168,76,0.05);
-      font-weight: 400;
-      color: var(--gold-light);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      position: relative;
-      z-index: 2;
-    }
-
-    footer a { color: var(--gold); text-decoration: none; }
-
-    /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero, .total-banner, .price-ticker, .holdings-grid, .breakdown {
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .total-banner { animation-delay: 0.1s; }
-    .price-ticker { animation-delay: 0.2s; }
-    .holdings-grid { animation-delay: 0.3s; }
-    .breakdown { animation-delay: 0.4s; }
-
-    /* Refresh button */
-    .refresh-btn {
-      background: none;
-      border: 1px solid rgba(201,168,76,0.3);
-      color: var(--gold);
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.2rem;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.2s;
-      margin-top: 1rem;
-    }
-
-    .refresh-btn:hover {
-      background: rgba(201,168,76,0.1);
-    }
-
-    .status-dot {
-      display: inline-block;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #4ade80;
-      margin-right: 0.4rem;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    body { font-family: system-ui, sans-serif; }
+    .live { animation: pulse 2s infinite; }
   </style>
 </head>
-<body>
-  <div class="noise"></div>
+<body class="bg-gray-950 text-white min-h-screen">
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-4xl font-bold text-center mb-2">My Gold & Silver Portfolio</h1>
+    <p class="text-center text-gray-400 mb-8">Live INR rates • Zero cost • Zero maintenance</p>
 
-  <header>
-    <div class="container">
-      <div class="header-inner">
-        <div class="brand">SASHANK <span>& MOKSHITH </span></div>
-        <div class="last-updated">
-          <span class="status-dot"></span>
-          Last updated: <span id="last-time">—</span>
+    <!-- Live Rates -->
+    <div class="bg-gray-900 rounded-2xl p-8 mb-8">
+      <h2 class="text-2xl font-semibold mb-6 flex items-center gap-2">
+        Live Rates <span id="last-updated" class="text-sm font-normal text-gray-400"></span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-800 rounded-xl p-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-yellow-400 text-xl font-bold">Gold (24K)</p>
+              <p id="gold-rate" class="text-4xl font-bold text-white mt-2">₹0.00</p>
+              <p class="text-sm text-gray-400">per 10 grams</p>
+            </div>
+            <div class="text-right">
+              <p id="gold-oz" class="text-xs text-gray-400">per oz: ₹0</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <div class="hero">
-      <div class="hero-label">Precious Metals Portfolio</div>
-      <h1>Your <em>Gold & Silver</em><br/>Holdings</h1>
-      <p class="hero-sub">Real-time valuation · 24K Gold · 999 Fine Silver</p>
-    </div>
-
-    <!-- Total Portfolio Value -->
-    <div class="total-banner">
-      <div class="total-label">Total Portfolio Value (INR)</div>
-      <div class="total-value">
-        <span class="currency">₹</span>
-        <span id="total-inr">—</span>
-      </div>
-      <div class="total-note" id="total-usd-note">Calculating based on live market rates…</div>
-      <button class="refresh-btn" onclick="fetchPrices()">↻ Refresh Prices</button>
-    </div>
-
-    <!-- Live Price Tickers -->
-    <div class="price-ticker">
-      <div class="ticker-card gold-card">
-        <div class="ticker-metal">24K Gold</div>
-        <div class="ticker-price" id="gold-price-display"><span class="ticker-loading">Loading…</span></div>
-        <div class="ticker-unit">per gram (INR)</div>
-        <div class="ticker-change" id="gold-change"></div>
-      </div>
-      <div class="ticker-card silver-card">
-        <div class="ticker-metal">999 Silver</div>
-        <div class="ticker-price" id="silver-price-display"><span class="ticker-loading">Loading…</span></div>
-        <div class="ticker-unit">per gram (INR)</div>
-        <div class="ticker-change" id="silver-change"></div>
-      </div>
-    </div>
-
-    <!-- Holdings Cards -->
-    <div class="section-title">Your Holdings</div>
-    <div class="holdings-grid">
-      <div class="holding-card gold-holding">
-        <div class="holding-icon">⬡</div>
-        <div class="holding-name">24 Karat Gold</div>
-        <div class="holding-weight">520 <span>grams</span></div>
-        <div class="holding-value">
-          <div class="holding-value-label">Current Value</div>
-          <div class="holding-value-amount" id="gold-holding-value">₹ —</div>
-        </div>
-      </div>
-      <div class="holding-card silver-holding">
-        <div class="holding-icon">◈</div>
-        <div class="holding-name">999 Fine Silver</div>
-        <div class="holding-weight">500 <span>grams</span></div>
-        <div class="holding-value">
-          <div class="holding-value-label">Current Value</div>
-          <div class="holding-value-amount" id="silver-holding-value">₹ —</div>
+        <div class="bg-gray-800 rounded-xl p-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-gray-300 text-xl font-bold">Silver</p>
+              <p id="silver-rate" class="text-4xl font-bold text-white mt-2">₹0.00</p>
+              <p class="text-sm text-gray-400">per kg</p>
+            </div>
+            <div class="text-right">
+              <p id="silver-oz" class="text-xs text-gray-400">per oz: ₹0</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Breakdown Table -->
-    <div class="section-title">Portfolio Breakdown</div>
-    <div class="breakdown">
-      <table>
-        <thead>
-          <tr>
-            <th>Metal</th>
-            <th>Purity</th>
-            <th>Weight</th>
-            <th>Price/gram</th>
-            <th>Total Value (INR)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="metal-name gold-name">Gold</span></td>
-            <td>24 Karat (99.9%)</td>
-            <td>520 g</td>
-            <td id="gold-per-gram">—</td>
-            <td id="gold-total-cell">—</td>
-          </tr>
-          <tr>
-            <td><span class="metal-name silver-name">Silver</span></td>
-            <td>999 Fine</td>
-            <td>500 g</td>
-            <td id="silver-per-gram">—</td>
-            <td id="silver-total-cell">—</td>
-          </tr>
-          <tr class="total-row">
-            <td colspan="4"><strong>Total Portfolio</strong></td>
-            <td id="grand-total-cell">—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+    <!-- Portfolio -->
+    <div class="bg-gray-900 rounded-2xl p-8">
+      <h2 class="text-2xl font-semibold mb-6">My Holdings</h2>
+      
+      <div class="space-y-8">
+        <!-- Gold -->
+        <div>
+          <label class="block text-yellow-400 font-medium mb-2">Gold (grams)</label>
+          <input id="gold-grams" type="number" step="0.01" value="0" 
+                 class="w-full bg-gray-800 text-3xl p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <p id="gold-value" class="mt-2 text-2xl font-bold text-yellow-400">Value: ₹0.00</p>
+        </div>
 
-  <footer>
-    <div class="container">
-      Prices fetched from open market data · Values in Indian Rupees (INR) ·
-      For reference only — not financial advice
+        <!-- Silver -->
+        <div>
+          <label class="block text-gray-300 font-medium mb-2">Silver (grams)</label>
+          <input id="silver-grams" type="number" step="0.01" value="0" 
+                 class="w-full bg-gray-800 text-3xl p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400">
+          <p id="silver-value" class="mt-2 text-2xl font-bold text-gray-300">Value: ₹0.00</p>
+        </div>
+
+        <!-- Total -->
+        <div class="border-t border-gray-700 pt-6">
+          <div class="flex justify-between text-3xl font-bold">
+            <span>Total Portfolio Value</span>
+            <span id="total-value" class="text-green-400">₹0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <button onclick="saveHoldings()" 
+                class="bg-green-600 hover:bg-green-500 px-8 py-3 rounded-full font-medium text-lg transition">
+          Save Holdings
+        </button>
+        <button onclick="resetHoldings()" 
+                class="ml-4 text-gray-400 hover:text-white text-sm">
+          Reset
+        </button>
+      </div>
     </div>
-  </footer>
+
+    <p class="text-center text-gray-500 text-xs mt-12">
+      Rates from public spot market • Pure 24K gold & 999 silver<br>
+      Data updates every 30 seconds • Stored only in your browser
+    </p>
+  </div>
 
   <script>
-    // --- Configuration ---
-    const GOLD_GRAMS = 520;
-    const SILVER_GRAMS = 500;
+    let goldPerGram = 0, silverPerGram = 0;
 
-    // Format number as Indian style (e.g. 1,23,456)
-    function formatINR(num) {
-      if (isNaN(num)) return '—';
-      return num.toLocaleString('en-IN', { maximumFractionDigits: 0 });
-    }
-
-    function setEl(id, val) {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = val;
-    }
-
-    async function fetchPrices() {
+    async function fetchLiveRates() {
       try {
-        // gold-api.com: completely free, no API key, no rate limits, no signup needed
-        // Returns USD per troy oz. 1 troy oz = 31.1035 grams
-        const [goldResp, silverResp, fxResp] = await Promise.all([
-          fetch('https://gold-api.com/price/XAU'),
-          fetch('https://gold-api.com/price/XAG'),
-          fetch('https://api.exchangerate-api.com/v4/latest/USD')
-        ]);
+        const res = await fetch('https://data-asg.goldprice.org/dbXRates/USD,INR');
+        const data = await res.json();
+        
+        const inr = data.items.find(item => item.curr === 'INR');
+        if (!inr) throw new Error();
 
-        const goldData   = await goldResp.json();
-        const silverData = await silverResp.json();
-        const fxData     = await fxResp.json();
+        const ozToGram = 31.1034768;
+        
+        // Gold per 10 grams (standard Indian display)
+        goldPerGram = inr.xauPrice / ozToGram;
+        const gold10g = (goldPerGram * 10).toFixed(2);
+        
+        // Silver per kg
+        silverPerGram = inr.xagPrice / ozToGram;
+        const silverKg = (silverPerGram * 1000).toFixed(2);
 
-        const goldUSDoz   = goldData.price;
-        const silverUSDoz = silverData.price;
-        const usdInr      = fxData.rates?.INR || 87.0;
+        // Update DOM
+        document.getElementById('gold-rate').textContent = `₹${gold10g}`;
+        document.getElementById('gold-oz').textContent = `per oz: ₹${inr.xauPrice.toFixed(0)}`;
+        
+        document.getElementById('silver-rate').textContent = `₹${silverKg}`;
+        document.getElementById('silver-oz').textContent = `per oz: ₹${inr.xagPrice.toFixed(0)}`;
 
-        if (!goldUSDoz || !silverUSDoz) throw new Error('No data');
+        const time = new Date(data.timestamp * 1000 || Date.now());
+        document.getElementById('last-updated').textContent = `• Updated ${time.toLocaleTimeString('en-IN')}`;
 
-        const goldPerGram   = (goldUSDoz   / 31.1035) * usdInr;
-        const silverPerGram = (silverUSDoz / 31.1035) * usdInr;
-
-        updateUI(goldPerGram, silverPerGram, usdInr);
-      } catch (e) {
-        // Fallback: last known rates (March 2026) shown if API is unreachable
-        fallbackPrices();
+        calculatePortfolio();
+      } catch(e) {
+        console.log("Rate fetch failed (rare)");
       }
     }
 
-    function fallbackPrices() {
-      // Approximate rates as of March 2026
-      const goldPerGram = 16353;  // ₹ (24K, Bengaluru - March 5, 2026)
-      const silverPerGram = 285;  // ₹ (999 fine silver, Bengaluru - March 5, 2026)
-      updateUI(goldPerGram, silverPerGram, 87.0, true);
+    function calculatePortfolio() {
+      const goldG = parseFloat(document.getElementById('gold-grams').value) || 0;
+      const silverG = parseFloat(document.getElementById('silver-grams').value) || 0;
+
+      const goldVal = (goldG * goldPerGram).toFixed(0);
+      const silverVal = (silverG * silverPerGram).toFixed(0);
+      const total = (parseFloat(goldVal) + parseFloat(silverVal)).toFixed(0);
+
+      document.getElementById('gold-value').textContent = `Value: ₹${goldVal}`;
+      document.getElementById('silver-value').textContent = `Value: ₹${silverVal}`;
+      document.getElementById('total-value').textContent = `₹${total}`;
     }
 
-    function updateUI(goldPerGram, silverPerGram, usdInr, isFallback = false) {
-      const goldTotal = goldPerGram * GOLD_GRAMS;
-      const silverTotal = silverPerGram * SILVER_GRAMS;
-      const grandTotal = goldTotal + silverTotal;
-
-      // Tickers
-      setEl('gold-price-display', '₹ ' + formatINR(Math.round(goldPerGram)));
-      setEl('silver-price-display', '₹ ' + formatINR(Math.round(silverPerGram)));
-
-      // Holdings
-      setEl('gold-holding-value', '₹ ' + formatINR(Math.round(goldTotal)));
-      setEl('silver-holding-value', '₹ ' + formatINR(Math.round(silverTotal)));
-
-      // Table
-      setEl('gold-per-gram', '₹ ' + formatINR(Math.round(goldPerGram)));
-      setEl('silver-per-gram', '₹ ' + formatINR(Math.round(silverPerGram)));
-      setEl('gold-total-cell', '₹ ' + formatINR(Math.round(goldTotal)));
-      setEl('silver-total-cell', '₹ ' + formatINR(Math.round(silverTotal)));
-      setEl('grand-total-cell', '₹ ' + formatINR(Math.round(grandTotal)));
-
-      // Total banner
-      setEl('total-inr', formatINR(Math.round(grandTotal)));
-      const totalUSD = grandTotal / usdInr;
-      setEl('total-usd-note',
-        (isFallback ? '⚠️ Estimated rates (offline) · ' : 'Live rates · ') +
-        'Approx. $' + formatINR(Math.round(totalUSD)) + ' USD · ' +
-        'Gold: ₹' + formatINR(Math.round(goldTotal)) + ' + Silver: ₹' + formatINR(Math.round(silverTotal))
-      );
-
-      // Time
-      const now = new Date();
-      setEl('last-time', now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }));
+    function saveHoldings() {
+      localStorage.setItem('goldGrams', document.getElementById('gold-grams').value);
+      localStorage.setItem('silverGrams', document.getElementById('silver-grams').value);
+      alert("✅ Holdings saved in your browser!");
     }
 
-    // Run on load
-    fetchPrices();
+    function resetHoldings() {
+      if (confirm("Clear all holdings?")) {
+        localStorage.clear();
+        document.getElementById('gold-grams').value = 0;
+        document.getElementById('silver-grams').value = 0;
+        calculatePortfolio();
+      }
+    }
 
-    // Auto-refresh every 5 minutes
-    setInterval(fetchPrices, 5 * 60 * 1000);
+    // Load saved values
+    window.onload = () => {
+      document.getElementById('gold-grams').value = localStorage.getItem('goldGrams') || 0;
+      document.getElementById('silver-grams').value = localStorage.getItem('silverGrams') || 0;
+      
+      fetchLiveRates();
+      setInterval(fetchLiveRates, 30000); // every 30 seconds
+      
+      // Recalculate on input change
+      document.getElementById('gold-grams').addEventListener('input', calculatePortfolio);
+      document.getElementById('silver-grams').addEventListener('input', calculatePortfolio);
+    };
   </script>
 </body>
 </html>
